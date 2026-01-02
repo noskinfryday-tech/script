@@ -248,7 +248,6 @@ do
     fly:AddSlider({ Name="Fly Speed", Value=flyspeed, Min=1, Max=5000, Callback=function(v)
         flyspeed = v
     end})
-    
 end
 
 --[[
