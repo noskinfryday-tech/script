@@ -175,7 +175,7 @@ local general = pepsi:CreateTab({ Name="Arsenal" })
 --]]
 
 do
-    local epic = general:CreateSection({ Name="Aim Options" })
+    local epic = general:CreateSection({ Name="Tweeks Arsenal Private" })
     
     function SetAllBasepartProperties (prop, value, ifobjfunc)
         for _,v in pairs(game.Workspace:GetDescendants()) do
@@ -192,6 +192,22 @@ do
             end
         end
     end
+    
+    epic:AddToggle({ Name="Neons", Key=true, Value=true, Callback=function(yes)
+        if yes then RestoreAllBasepartProperties("Material")
+        else SetAllBasepartProperties("Material", Enum.Material.Plastic, function(obj) return obj.Material==Enum.Material.Neon end)
+        end
+    end})
+    
+    epic:AddToggle({ Name="Moving Parts", Key=true, Value=true, Callback=function(yes)
+        if yes then RestoreAllBasepartProperties("Velocity")
+        else SetAllBasepartProperties("Velocity", Vector3.zero)
+        end
+    end})
+    
+    epic:AddSlider({ Name="Walk speed", Value=human.WalkSpeed, Min=1, Max=5000, Callback=function(v)
+        human.WalkSpeed = v
+    end})
     
     epic:AddToggle({ Name="Full Aimlock", Key=Enum.KeyCode.T, Value=false, Callback=function(yes)
         aimbot = yes
@@ -238,7 +254,7 @@ do
     
     local fly = general:CreateSection({ Name="Fly" })
     
-    ui_toggle_fly = fly:AddToggle({ Name="Fly", Key=Enum.KeyCode.LeftAlt, Callback=function(yes)
+    ui_toggle_fly = fly:AddToggle({ Name="Fly", Key=Enum.KeyCode.U, Callback=function(yes)
         flying = yes
         if yes then Fly() end
     end, UnloadFunc = function()
@@ -248,8 +264,8 @@ do
     fly:AddSlider({ Name="Fly Speed", Value=flyspeed, Min=1, Max=5000, Callback=function(v)
         flyspeed = v
     end})
-  
-    fly:AddToggle({ Name="Keep On To Fly", Value=useplatformstand, Callback=function(yes)
+    
+    fly:AddToggle({ Name="Use PlatformStand", Value=useplatformstand, Callback=function(yes)
         useplatformstand = yes
     end})
     
@@ -265,7 +281,7 @@ end
 
 --[[
 --
--- ESP
+-- JAILBREAK
 --
 --]]
 
