@@ -193,22 +193,6 @@ do
         end
     end
     
-    epic:AddToggle({ Name="Neons", Key=true, Value=true, Callback=function(yes)
-        if yes then RestoreAllBasepartProperties("Material")
-        else SetAllBasepartProperties("Material", Enum.Material.Plastic, function(obj) return obj.Material==Enum.Material.Neon end)
-        end
-    end})
-    
-    epic:AddToggle({ Name="Moving Parts", Key=true, Value=true, Callback=function(yes)
-        if yes then RestoreAllBasepartProperties("Velocity")
-        else SetAllBasepartProperties("Velocity", Vector3.zero)
-        end
-    end})
-    
-    epic:AddSlider({ Name="Walk speed", Value=human.WalkSpeed, Min=1, Max=5000, Callback=function(v)
-        human.WalkSpeed = v
-    end})
-    
     epic:AddToggle({ Name="Full Aimlock", Key=Enum.KeyCode.T, Value=false, Callback=function(yes)
         aimbot = yes
     end})
