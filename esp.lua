@@ -143,7 +143,7 @@ if _G.DefaultSettings == true then
     _G.Center = true
     _G.Outline = false
     _G.OutlineColor = Color3.fromRGB(0, 0, 0)
-    _G.DisableKey = Enum.KeyCode.Q
+    _G.DisableKey = Enum.KeyCode.C
     _G.TextTransparency = 0.75
 end
 
@@ -163,7 +163,7 @@ UserInputService.InputBegan:Connect(function(Input)
             game:GetService("StarterGui"):SetCore("SendNotification",{
                 Title = "Tweeks Developer";
                 Text = "The ESP's visibility is now set to "..tostring(_G.ESPVisible)..".";
-                Duration = 5;
+                Duration = 3;
             })
         end
     end
@@ -177,8 +177,8 @@ if Success and not Errored then
     if _G.SendNotifications == true then
         game:GetService("StarterGui"):SetCore("SendNotification",{
             Title = "Tweeks Esp";
-            Text = "ESP script has successfully loaded.";
-            Duration = 5;
+            Text = "ESP is now Activated.";
+            Duration = 3;
         })
     end
 elseif Errored and not Success then
@@ -186,7 +186,7 @@ elseif Errored and not Success then
         game:GetService("StarterGui"):SetCore("SendNotification",{
             Title = "Tweeks Esp";
             Text = "ESP script has errored while loading, please check the developer console! (F9)";
-            Duration = 5;
+            Duration = 3;
         })
     end
     TestService:Message("The ESP script has errored, please notify Exunys with the following information :")
