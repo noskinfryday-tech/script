@@ -249,7 +249,7 @@ do
         flyspeed = v
     end})
   
-    fly:AddToggle({ Name="Use PlatformStand", Value=useplatformstand, Callback=function(yes)
+    fly:AddToggle({ Name="Keep On To Fly", Value=useplatformstand, Callback=function(yes)
         useplatformstand = yes
     end})
     
@@ -265,7 +265,7 @@ end
 
 --[[
 --
--- JAILBREAK
+-- ESP
 --
 --]]
 
@@ -274,8 +274,7 @@ do
     
     local sceleton = general:CreateSection({ Name="Sceletons" })
     
-    local g = jb:CreateSection({ Name="Visuals" })
-        
+    local g = jb:CreateSection({ Name="Visuals" }) 
         end
     end})
 end
