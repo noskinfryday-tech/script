@@ -163,7 +163,7 @@ end)
 local pepsi = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)():CreateWindow({
     Name = "Tweeks Arsenal Private",
     Themeable = {
-        Info = "Discord Server: VzYTJ7Y"
+        Info = "https://discord.gg/8WrXTw9N8P"
     }
 })
 local general = pepsi:CreateTab({ Name="Arsenal" })
@@ -192,22 +192,6 @@ do
             end
         end
     end
-    
-    epic:AddToggle({ Name="Neons", Key=true, Value=true, Callback=function(yes)
-        if yes then RestoreAllBasepartProperties("Material")
-        else SetAllBasepartProperties("Material", Enum.Material.Plastic, function(obj) return obj.Material==Enum.Material.Neon end)
-        end
-    end})
-    
-    epic:AddToggle({ Name="Moving Parts", Key=true, Value=true, Callback=function(yes)
-        if yes then RestoreAllBasepartProperties("Velocity")
-        else SetAllBasepartProperties("Velocity", Vector3.zero)
-        end
-    end})
-    
-    epic:AddSlider({ Name="Walk speed", Value=human.WalkSpeed, Min=1, Max=5000, Callback=function(v)
-        human.WalkSpeed = v
-    end})
     
     epic:AddToggle({ Name="Full Aimlock", Key=Enum.KeyCode.T, Value=false, Callback=function(yes)
         aimbot = yes
