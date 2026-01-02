@@ -249,7 +249,7 @@ do
         flyspeed = v
     end})
   
-    fly:AddToggle({ Name="Keep on For Fly!", Value=useplatformstand, Callback=function(yes)
+    fly:AddToggle({ Name="Use PlatformStand", Value=useplatformstand, Callback=function(yes)
         useplatformstand = yes
     end})
     
