@@ -193,7 +193,6 @@ do
         end
     end
 
-    
     epic:AddToggle({ Name="Full Aimlock", Key=Enum.KeyCode.T, Value=false, Callback=function(yes)
         aimbot = yes
     end})
