@@ -263,8 +263,11 @@ end
 
 do
     local jb = pepsi:CreateTab({ Name="ESP" })
+    
     local sceleton = general:CreateSection({ Name="Sceletons" })
-    local g = jb:CreateSection({ Name="Tweeks Favs" })
+    
+    local g = jb:CreateSection({ Name="Visuals" })
+        
         end
     end})
 end
