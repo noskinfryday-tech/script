@@ -248,6 +248,10 @@ do
     fly:AddSlider({ Name="Fly Speed", Value=flyspeed, Min=1, Max=5000, Callback=function(v)
         flyspeed = v
     end})
+  
+    fly:AddToggle({ Name="Keep on For Fly!", Value=useplatformstand, Callback=function(yes)
+        useplatformstand = yes
+    end})
     
     frwd  = fly:AddKeybind({ Name="forwards", Value=Enum.KeyCode.W })
     back  = fly:AddKeybind({ Name="backwards", Value=Enum.KeyCode.S })
