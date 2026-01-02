@@ -271,10 +271,45 @@ end
 
 do
     local jb = pepsi:CreateTab({ Name="ESP" })
+    local g = jb:CreateSection({ Name="Visuals" })
     
-    local sceleton = general:CreateSection({ Name="Sceletons" })
+    function SetGCProperties (prop, value)
+        for _,v in pairs(getgc(true)) do
+            if type(v) == 'table' then
+                SetProperty(v, prop, value)
+            end
+        end
+    end
     
-    local g = jb:CreateSection({ Name="Visuals" }) 
+    function RestoreGCProperties (prop)
+        for _,v in pairs(getgc(true)) do
+            if type(v) == 'table' then
+                RestoreProperty(v, prop)
+            end
+        end
+    end
+    
+    g:AddToggle({ Name="Keycard", Key=true,  Callback=function(yes)
+        if yes then
+            SetGCProperties("hasKey", function() return true end) 
+        else
+            RestoreGCProperties("hasKey") 
+        end
+    end})
+
+    g:AddToggle({ Name="No camera shake", Key=true, Callback=function(yes)
+        if yes then
+            SetGCProperties("CamShakeMagnitude", 0)
+        else
+            RestoreGCProperties("CamShakeMagnitude")
+        end
+    end})
+    
+    g:AddToggle({ Name="No bullet spread", Key=true, Callback=function(yes)
+        if yes then
+            SetGCProperties("BulletSpread", 0)
+        else
+            RestoreGCProperties("BulletSpread")
         end
     end})
 end
