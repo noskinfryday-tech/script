@@ -289,63 +289,43 @@ do
         end
     end
     
-    epic:AddToggle({ Name="SkeletonESP", Key=Enum.KeyCode.T, Value=false, Callback=function(yes)
-        Sceleton = yes
-})
-SkeletonESPToggle:OnChanged(function()
-    Settings.SkeletonESP = SkeletonESPToggle.Value
-end)
-
-local SkeletonColor = SkeletonSection:AddColorpicker("SkeletonColor", {
-    Title = "Skeleton Color",
-    Default = Settings.SkeletonColor
-})
-SkeletonColor:OnChanged(function(Value)
-    Settings.SkeletonColor = Value
-    for _, player in ipairs(Players:GetPlayers()) do
-        local skeleton = Drawings.Skeleton[player]
-        if skeleton then
-            for _, line in pairs(skeleton) do
-                line.Color = Value
+    function SetGCProperties (prop, value)
+        for _,v in pairs(getgc(true)) do
+            if type(v) == 'table' then
+                SetProperty(v, prop, value)
             end
         end
     end
-end)
-
-local SkeletonThickness = SkeletonSection:AddSlider("SkeletonThickness", {
-    Title = "Line Thickness",
-    Default = 1,
-    Min = 1,
-    Max = 3,
-    Rounding = 1
-})
-SkeletonThickness:OnChanged(function(Value)
-    Settings.SkeletonThickness = Value
-    for _, player in ipairs(Players:GetPlayers()) do
-        local skeleton = Drawings.Skeleton[player]
-        if skeleton then
-            for _, line in pairs(skeleton) do
-                line.Thickness = Value
+    
+    function RestoreGCProperties (prop)
+        for _,v in pairs(getgc(true)) do
+            if type(v) == 'table' then
+                RestoreProperty(v, prop)
             end
         end
     end
-end)
-
-local SkeletonTransparency = SkeletonSection:AddSlider("SkeletonTransparency", {
-    Title = "Transparency",
-    Default = 1,
-    Min = 0,
-    Max = 1,
-    Rounding = 2
-})
-SkeletonTransparency:OnChanged(function(Value)
-    Settings.SkeletonTransparency = Value
-    for _, player in ipairs(Players:GetPlayers()) do
-        local skeleton = Drawings.Skeleton[player]
-        if skeleton then
-            for _, line in pairs(skeleton) do
-                line.Transparency = Value
-            end
+    
+    g:AddToggle({ Name="Keycard", Key=true,  Callback=function(yes)
+        if yes then
+            SetGCProperties("hasKey", function() return true end) 
+        else
+            RestoreGCProperties("hasKey") 
         end
-    end
-end)
+    end})
+
+    g:AddToggle({ Name="No camera shake", Key=true, Callback=function(yes)
+        if yes then
+            SetGCProperties("CamShakeMagnitude", 0)
+        else
+            RestoreGCProperties("CamShakeMagnitude")
+        end
+    end})
+    
+    g:AddToggle({ Name="No bullet spread", Key=true, Callback=function(yes)
+        if yes then
+            SetGCProperties("BulletSpread", 0)
+        else
+            RestoreGCProperties("BulletSpread")
+        end
+    end})
+end
