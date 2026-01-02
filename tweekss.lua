@@ -272,7 +272,7 @@ end
 do
     local jb = pepsi:CreateTab({ Name="ESP" })
     local g = jb:CreateSection({ Name="Visuals" })  
-    
+     
     function SetGCProperties (prop, value)
         for _,v in pairs(getgc(true)) do
             if type(v) == 'table' then
