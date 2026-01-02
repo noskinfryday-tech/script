@@ -248,6 +248,16 @@ do
     fly:AddSlider({ Name="Fly Speed", Value=flyspeed, Min=1, Max=5000, Callback=function(v)
         flyspeed = v
     end})
+    
+    frwd  = fly:AddKeybind({ Name="forwards", Value=Enum.KeyCode.W })
+    back  = fly:AddKeybind({ Name="backwards", Value=Enum.KeyCode.S })
+    left  = fly:AddKeybind({ Name="left",  Value=Enum.KeyCode.A })
+    right = fly:AddKeybind({ Name="right", Value=Enum.KeyCode.D })
+    up    = fly:AddKeybind({ Name="up",    Value=Enum.KeyCode.Space })
+    down  = fly:AddKeybind({ Name="down",  Value=Enum.KeyCode.LeftShift })
+    x2    = fly:AddKeybind({ Name="2x speed (hold)", Value=Enum.KeyCode.LeftControl })
+    x4    = fly:AddKeybind({ Name="4x speed (hold)", Value=Enum.KeyCode.LeftAlt })
+end
 
 --[[
 --
