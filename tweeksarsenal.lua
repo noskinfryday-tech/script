@@ -175,7 +175,7 @@ local general = pepsi:CreateTab({ Name="Arsenal" })
 --]]
 
 do
-    local epic = general:CreateSection({ Name="Tweeks Arsenal Private" })
+    local epic = general:CreateSection({ Name="Aim Options" })
     
     function SetAllBasepartProperties (prop, value, ifobjfunc)
         for _,v in pairs(game.Workspace:GetDescendants()) do
@@ -193,7 +193,7 @@ do
         end
     end
     
-    epic:AddToggle({ Name="Full Aimlock", Key=Enum.KeyCode.T, Value=false, Callback=function(yes)
+    epic:AddToggle({ Name="Aimlock", Key=Enum.KeyCode.T, Value=false, Callback=function(yes)
         aimbot = yes
     end})
 end
