@@ -175,7 +175,7 @@ local general = pepsi:CreateTab({ Name="Arsenal" })
 --]]
 
 do
-    local epic = general:CreateSection({ Name="Tweeks Arsenal Private" })
+    local epic = general:CreateSection({ Name="Aim Options" })
     
     function SetAllBasepartProperties (prop, value, ifobjfunc)
         for _,v in pairs(game.Workspace:GetDescendants()) do
@@ -238,7 +238,7 @@ do
     
     local fly = general:CreateSection({ Name="Fly" })
     
-    ui_toggle_fly = fly:AddToggle({ Name="Fly", Key=Enum.KeyCode.U, Callback=function(yes)
+    ui_toggle_fly = fly:AddToggle({ Name="Fly", Key=Enum.KeyCode.LeftAlt, Callback=function(yes)
         flying = yes
         if yes then Fly() end
     end, UnloadFunc = function()
@@ -249,18 +249,6 @@ do
         flyspeed = v
     end})
     
-    fly:AddToggle({ Name="Use PlatformStand", Value=useplatformstand, Callback=function(yes)
-        useplatformstand = yes
-    end})
-    
-    frwd  = fly:AddKeybind({ Name="forwards", Value=Enum.KeyCode.W })
-    back  = fly:AddKeybind({ Name="backwards", Value=Enum.KeyCode.S })
-    left  = fly:AddKeybind({ Name="left",  Value=Enum.KeyCode.A })
-    right = fly:AddKeybind({ Name="right", Value=Enum.KeyCode.D })
-    up    = fly:AddKeybind({ Name="up",    Value=Enum.KeyCode.Space })
-    down  = fly:AddKeybind({ Name="down",  Value=Enum.KeyCode.LeftShift })
-    x2    = fly:AddKeybind({ Name="2x speed (hold)", Value=Enum.KeyCode.LeftControl })
-    x4    = fly:AddKeybind({ Name="4x speed (hold)", Value=Enum.KeyCode.LeftAlt })
 end
 
 --[[
