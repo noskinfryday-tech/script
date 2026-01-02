@@ -161,12 +161,12 @@ end)
 --]]
 
 local pepsi = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)():CreateWindow({
-    Name = "Epic",
+    Name = "Tweeks Arsenal Private",
     Themeable = {
         Info = "Discord Server: VzYTJ7Y"
     }
 })
-local general = pepsi:CreateTab({ Name="General" })
+local general = pepsi:CreateTab({ Name="Arsenal" })
 
 --[[
 --
@@ -175,7 +175,7 @@ local general = pepsi:CreateTab({ Name="General" })
 --]]
 
 do
-    local epic = general:CreateSection({ Name="Epic" })
+    local epic = general:CreateSection({ Name="Tweeks Arsenal Private" })
     
     function SetAllBasepartProperties (prop, value, ifobjfunc)
         for _,v in pairs(game.Workspace:GetDescendants()) do
@@ -205,11 +205,11 @@ do
         end
     end})
     
-    epic:AddSlider({ Name="Walk speed", Value=human.WalkSpeed, Min=1, Max=1000, Callback=function(v)
+    epic:AddSlider({ Name="Walk speed", Value=human.WalkSpeed, Min=1, Max=5000, Callback=function(v)
         human.WalkSpeed = v
     end})
     
-    epic:AddToggle({ Name="Aimbot / Aimlock", Key=Enum.KeyCode.Q, Value=false, Callback=function(yes)
+    epic:AddToggle({ Name="Full Aimlock", Key=Enum.KeyCode.T, Value=false, Callback=function(yes)
         aimbot = yes
     end})
 end
@@ -254,14 +254,14 @@ do
     
     local fly = general:CreateSection({ Name="Fly" })
     
-    ui_toggle_fly = fly:AddToggle({ Name="Fly", Key=Enum.KeyCode.F, Callback=function(yes)
+    ui_toggle_fly = fly:AddToggle({ Name="Fly", Key=Enum.KeyCode.U, Callback=function(yes)
         flying = yes
         if yes then Fly() end
     end, UnloadFunc = function()
         flying = false
     end})
     
-    fly:AddSlider({ Name="Fly Speed", Value=flyspeed, Min=1, Max=1000, Callback=function(v)
+    fly:AddSlider({ Name="Fly Speed", Value=flyspeed, Min=1, Max=5000, Callback=function(v)
         flyspeed = v
     end})
     
@@ -286,8 +286,8 @@ end
 --]]
 
 do
-    local jb = pepsi:CreateTab({ Name="JailBreak" })
-    local g = jb:CreateSection({ Name="General" })
+    local jb = pepsi:CreateTab({ Name="ESP" })
+    local g = jb:CreateSection({ Name="Tweeks Favs" })
     
     function SetGCProperties (prop, value)
         for _,v in pairs(getgc(true)) do
