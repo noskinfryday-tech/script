@@ -10,7 +10,7 @@ local Find_Required = API_Check()
 
 if Find_Required == "No" then
     game:GetService("StarterGui"):SetCore("SendNotification",{
-        Title = "Exunys Developer";
+        Title = "Tweeks Loader";
         Text = "ESP script could not be loaded because your exploit is unsupported.";
         Duration = math.huge;
         Button1 = "OK"
@@ -32,7 +32,7 @@ _G.DefaultSettings = false   -- If set to true then the ESP script would run wit
 _G.TeamCheck = false   -- If set to true then the script would create ESP only for the enemy team members.
 
 _G.ESPVisible = true   -- If set to true then the ESP will be visible and vice versa.
-_G.TextColor = Color3.fromRGB(204, 255, 255)   -- The color that the boxes would appear as.
+_G.TextColor = Color3.fromRGB(102, 204, 0)   -- The color that the boxes would appear as.
 _G.TextSize = 14   -- The size of the text.
 _G.Center = true   -- If set to true then the script would be located at the center of the label.
 _G.Outline = true   -- If set to true then the text would have an outline.
@@ -69,7 +69,7 @@ local function CreateESP()
                             if Players.LocalPlayer.Team ~= v.Team then
                                 ESP.Visible = _G.ESPVisible
                             else
-                                ESP.Visible = false
+                                ESP.Visible = true
                             end
                         else
                             ESP.Visible = _G.ESPVisible
