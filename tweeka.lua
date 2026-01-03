@@ -160,7 +160,7 @@ end)
 --
 --]]
 
-local pepsi = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)():CreateWindow({
+local pepsi = loadstring(game:GetObjects("rbxassetid://131114267717150")[1].Source)():CreateWindow({
     Name = "Tweeks Arsenal Private",
     Themeable = {
         Info = "https://discord.gg/8WrXTw9N8P"
@@ -252,15 +252,6 @@ do
     fly:AddToggle({ Name="Use PlatformStand", Value=useplatformstand, Callback=function(yes)
         useplatformstand = yes
     end})
-    
-    frwd  = fly:AddKeybind({ Name="forwards", Value=Enum.KeyCode.W })
-    back  = fly:AddKeybind({ Name="backwards", Value=Enum.KeyCode.S })
-    left  = fly:AddKeybind({ Name="left",  Value=Enum.KeyCode.A })
-    right = fly:AddKeybind({ Name="right", Value=Enum.KeyCode.D })
-    up    = fly:AddKeybind({ Name="up",    Value=Enum.KeyCode.Space })
-    down  = fly:AddKeybind({ Name="down",  Value=Enum.KeyCode.LeftShift })
-    x2    = fly:AddKeybind({ Name="2x speed (hold)", Value=Enum.KeyCode.LeftControl })
-    x4    = fly:AddKeybind({ Name="4x speed (hold)", Value=Enum.KeyCode.LeftAlt })
 end
 
 --[[
