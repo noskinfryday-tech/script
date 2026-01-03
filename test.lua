@@ -252,7 +252,7 @@ do
     fly:AddToggle({ Name="Use PlatformStand", Value=useplatformstand, Callback=function(yes)
         useplatformstand = yes
     end})
-        
+    
     frwd  = fly:AddKeybind({ Name="forwards", Value=Enum.KeyCode.W })
     back  = fly:AddKeybind({ Name="backwards", Value=Enum.KeyCode.S })
     left  = fly:AddKeybind({ Name="left",  Value=Enum.KeyCode.A })
