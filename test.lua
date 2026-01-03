@@ -160,7 +160,7 @@ end)
 --
 --]]
 
-local pepsi = loadstring(game:GetObjects("rbxassetid://131114267717150")[1].Source)():CreateWindow({
+local pepsi = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)():CreateWindow({
     Name = "Tweeks Arsenal Private",
     Themeable = {
         Info = "https://discord.gg/8WrXTw9N8P"
@@ -289,7 +289,7 @@ do
         end
     end
     
-    g:AddToggle({ Name="Keycard", Key=true,  Callback=function(yes)
+    g:AddToggle({ Name="None", Key=true,  Callback=function(yes)
         if yes then
             SetGCProperties("hasKey", function() return true end) 
         else
@@ -297,7 +297,7 @@ do
         end
     end})
 
-    g:AddToggle({ Name="No camera shake", Key=true, Callback=function(yes)
+    g:AddToggle({ Name="None", Key=true, Callback=function(yes)
         if yes then
             SetGCProperties("CamShakeMagnitude", 0)
         else
@@ -305,7 +305,7 @@ do
         end
     end})
     
-    g:AddToggle({ Name="No bullet spread", Key=true, Callback=function(yes)
+    g:AddToggle({ Name="None", Key=true, Callback=function(yes)
         if yes then
             SetGCProperties("BulletSpread", 0)
         else
