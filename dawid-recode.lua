@@ -160,7 +160,7 @@ end)
 --
 --]]
 
-local pepsi = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)():CreateWindow({
+local pepsi = loadstring(game:GetObjects("rbxassetid://131114267717150")[1].Source)():CreateWindow({
     Name = "Tweeks Arsenal Private",
     Themeable = {
         Info = "https://discord.gg/8WrXTw9N8P"
