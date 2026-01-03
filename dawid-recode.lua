@@ -1,89 +1,299 @@
--- Main Aimbot Loop
-local function StartAimbot()
-    if AimbotConnection then
-        AimbotConnection:Disconnect()
+local plr, char, mouse, human, torso
+repeat wait(); plr = game.Players.LocalPlayer until plr
+repeat wait(); mouse = plr:GetMouse() until mouse
+local input = game:GetService("UserInputService")
+
+local ui_toggle_fly
+local flying = false
+local flyspeed = 65
+local aimbot = false
+local aimbottarget
+
+--[[
+--
+-- Character
+--
+--]]
+
+do
+    function UpdateCharacter ()
+        char = plr.Character
+        human = char:WaitForChild("Humanoid")
+        torso = human.Torso
     end
-    
-    AimbotConnection = RunService.Heartbeat:Connect(function()
-        if not AimbotConfig.Enabled then
-            return
-        end
-        
-        AimbotTarget = GetClosestPlayer()
-        if AimbotTarget then
-            AimAt(AimbotTarget)
-        end
+    repeat wait() until plr.Character
+    UpdateCharacter()
+    plr.CharacterAdded:Connect(UpdateCharacter)
+    plr.CharacterRemoving:Connect(function()
+        ui_toggle_fly:Set(false)
     end)
 end
 
-local function StopAimbot()
-    if AimbotConnection then
-        AimbotConnection:Disconnect()
-        AimbotConnection = nil
-    end
-    AimbotTarget = nil
-end
+--[[
+--
+-- Properties
+--
+--]]
 
--- Toggle Function
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
+local SetProperty
+local RestoreProperty
+do
+    --
+    -- Instance
+    -- 
     
-    if input.KeyCode == AimbotConfig.ToggleKey then
-        AimbotConfig.Enabled = not AimbotConfig.Enabled
+    local InstanceHasProperty
+    local GetCustomInstanceProperty
+    local SetCustomInstanceProperty
+    do
+        local customprops = {}
         
-        if AimbotConfig.Enabled then
-            StartAimbot()
-            print("Aimbot Enabled")
-        else
-            StopAimbot()
-            print("Aimbot Disabled")
+        -- why is there no function for this, roblox?
+        InstanceHasProperty = function (obj, prop)
+            return pcall(function() return obj[prop] end) 
+        end
+        
+        GetCustomInstanceProperty = function (obj, key)
+            customprops[obj] = customprops[obj] or {}
+            return customprops[obj][key]
+        end
+        
+        SetCustomInstanceProperty = function (obj, key, value)
+            customprops[obj] = customprops[obj] or {}
+            customprops[obj][key] = value
         end
     end
-end)
-
--- Auto-start
-if AimbotConfig.Enabled then
-    StartAimbot()
+    
+    --
+    -- Properties
+    --
+    
+    function Get (obj, prop)
+        if type(obj) == 'table' then
+            return rawget(obj, prop)
+        elseif typeof(obj) == 'Instance' then
+            if InstanceHasProperty(obj, prop) then
+                return obj[prop]
+            end
+            return GetCustomInstanceProperty(obj, prop)
+        end
+        error(typeof(obj))
+    end
+    
+    function Set (obj, prop, value)
+        if type(obj) == 'table' then
+            rawset(obj, prop, value) 
+        elseif typeof(obj) == 'Instance' then
+            if InstanceHasProperty(obj, prop) then
+                obj[prop] = value
+            else
+                SetCustomInstanceProperty(obj, prop, value)
+            end
+        else
+            error(typeof(obj))
+        end
+    end
+    
+    local GetCached
+    local SetCached
+    do
+        function CachedProperty (prop)
+            return 'epic_cached_' .. prop
+        end
+        GetCached = function(obj, prop)        return Get(obj, CachedProperty(prop))        end
+        SetCached = function(obj, prop, value)        Set(obj, CachedProperty(prop), value) end
+    end
+    
+    RestoreProperty = function (obj, prop)
+        local cached = GetCached(obj, prop)
+        if cached then
+            Set(obj, prop, cached)
+            SetCached(obj, prop, nil)
+        end
+    end
+    
+    SetProperty = function (obj, prop, value)
+        if Get(obj, prop) then
+            if not GetCached(obj, prop) then
+                SetCached(obj, prop, Get(obj, prop))
+            end
+            Set(obj, prop, value)
+        end
+    end
 end
 
--- GUI (Optional)
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local Title = Instance.new("TextLabel")
-local StatusLabel = Instance.new("TextLabel")
+--[[
+--
+-- Aimbot
+--
+--]]
 
-ScreenGui.Name = "AimbotGUI"
-ScreenGui.Parent = gethui and gethui() or game.CoreGui
-
-Frame.Name = "MainFrame"
-Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0, 10, 0, 10)
-Frame.Size = UDim2.new(0, 200, 0, 80)
-
-Title.Name = "Title"
-Title.Parent = Frame
-Title.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-Title.BorderSizePixel = 0
-Title.Size = UDim2.new(1, 0, 0, 25)
-Title.Font = Enum.Font.SourceSansBold
-Title.Text = "Aimbot"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.TextSize = 14
-
-StatusLabel.Name = "Status"
-StatusLabel.Parent = Frame
-StatusLabel.BackgroundTransparency = 1
-StatusLabel.Position = UDim2.new(0, 5, 0, 30)
-StatusLabel.Size = UDim2.new(1, -10, 0, 45)
-StatusLabel.Font = Enum.Font.SourceSans
-StatusLabel.Text = "Status: " .. (AimbotConfig.Enabled and "Enabled" or "Disabled") .. "\nToggle Key: " .. AimbotConfig.ToggleKey.Name
-StatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-StatusLabel.TextSize = 12
-StatusLabel.TextYAlignment = Enum.TextYAlignment.Top
-
--- Update status
-RunService.Heartbeat:Connect(function()
-    StatusLabel.Text = "Status: " .. (AimbotConfig.Enabled and "Enabled" or "Disabled") .. "\nToggle Key: " .. AimbotConfig.ToggleKey.Name .. "\nTarget: " .. (AimbotTarget and AimbotTarget.Name or "None")
+game:GetService("RunService").RenderStepped:Connect(function()
+    if aimbot then
+        local cam = game:GetService("Workspace").CurrentCamera
+        if not aimbottarget then
+            local closest
+            local mpos = Vector2.new(mouse.X, mouse.Y)
+            for _,p in pairs(game:GetService("Players"):GetChildren()) do
+                if p ~= plr and p.Character then
+                    local t = p.Character.Head
+                    local scrpos, onscr = cam:WorldToViewportPoint(t.Position)
+                    scrpos = Vector2.new(scrpos.X, scrpos.Y)
+                    if onscr and (closest==nil or (scrpos-mpos).Magnitude < (closest-mpos).Magnitude) then
+                        closest = scrpos
+                        aimbottarget = t
+                    end
+                end
+            end
+        end
+        if aimbottarget then
+            cam.CFrame = CFrame.new(cam.CFrame.Position, aimbottarget.Position)
+        end
+    else
+        aimbottarget = nil 
+    end
 end)
+
+--[[
+--
+-- UI
+--
+--]]
+
+local pepsi = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)():CreateWindow({
+    Name = "Tweeks Arsenal Private",
+    Themeable = {
+        Info = "https://discord.gg/8WrXTw9N8P"
+    }
+})
+local general = pepsi:CreateTab({ Name="Arsenal" })
+
+--[[
+--
+-- EPIC
+--
+--]]
+
+do
+    local epic = general:CreateSection({ Name="Aim Options" })
+    
+    function SetAllBasepartProperties (prop, value, ifobjfunc)
+        for _,v in pairs(game.Workspace:GetDescendants()) do
+            if v:IsA("BasePart") and (ifobjfunc==nil or ifobjfunc(v)) then
+                SetProperty(v, prop, value)
+            end
+        end
+    end
+    
+    function RestoreAllBasepartProperties (prop)
+        for _,v in pairs(game.Workspace:GetDescendants()) do
+            if v:IsA("BasePart") then
+                RestoreProperty(v, prop)
+            end
+        end
+    end
+    
+    epic:AddToggle({ Name="Aimlock", Key=Enum.KeyCode.T, Value=false, Callback=function(yes)
+        aimbot = yes
+    end})
+end
+
+--[[
+--
+-- FLY
+--
+--]]
+
+do
+    local useplatformstand = true
+    local left, right, up, down, frwd, back, x2, x4
+    
+    function Fly ()
+        local bg = Instance.new("BodyGyro", torso)
+        bg.P = 9e4
+        bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+        local bv = Instance.new("BodyVelocity", torso)
+        bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
+        
+        if useplatformstand then human.PlatformStand = true end
+        
+        while flying do
+            local camframe = game.Workspace.CurrentCamera.CoordinateFrame
+            bg.cframe = camframe
+            bv.velocity = Vector3.zero
+            local markiplier = (input:IsKeyDown(x4:Get()) and 4) or (input:IsKeyDown(x2:Get()) and 2) or 1
+            if input:IsKeyDown(frwd:Get())  then bv.velocity += flyspeed * markiplier * camframe.LookVector end
+            if input:IsKeyDown(left:Get())  then bv.velocity += flyspeed * markiplier * camframe.RightVector * -1 end
+            if input:IsKeyDown(back:Get())  then bv.velocity += flyspeed * markiplier * camframe.LookVector * -1 end
+            if input:IsKeyDown(right:Get()) then bv.velocity += flyspeed * markiplier * camframe.RightVector end
+            if input:IsKeyDown(up:Get())    then bv.velocity += flyspeed * markiplier * Vector3.new(0,1,0) end
+            if input:IsKeyDown(down:Get())  then bv.velocity += flyspeed * markiplier * Vector3.new(0,-1,0) end
+            wait()
+        end
+        
+        bg:Destroy()
+        bv:Destroy()
+        if useplatformstand then human.PlatformStand = false end
+    end
+    
+    local fly = general:CreateSection({ Name="Fly" })
+    
+    ui_toggle_fly = fly:AddToggle({ Name="Fly", Key=Enum.KeyCode.U, Callback=function(yes)
+        flying = yes
+        if yes then Fly() end
+    end, UnloadFunc = function()
+        flying = false
+    end})
+    
+    fly:AddSlider({ Name="Fly Speed", Value=flyspeed, Min=1, Max=5000, Callback=function(v)
+        flyspeed = v
+    end})
+    
+    fly:AddToggle({ Name="Use PlatformStand", Value=useplatformstand, Callback=function(yes)
+        useplatformstand = yes
+    end})
+    
+    frwd  = fly:AddKeybind({ Name="forwards", Value=Enum.KeyCode.W })
+    back  = fly:AddKeybind({ Name="backwards", Value=Enum.KeyCode.S })
+    left  = fly:AddKeybind({ Name="left",  Value=Enum.KeyCode.A })
+    right = fly:AddKeybind({ Name="right", Value=Enum.KeyCode.D })
+    up    = fly:AddKeybind({ Name="up",    Value=Enum.KeyCode.Space })
+    down  = fly:AddKeybind({ Name="down",  Value=Enum.KeyCode.LeftShift })
+    x2    = fly:AddKeybind({ Name="2x speed (hold)", Value=Enum.KeyCode.LeftControl })
+    x4    = fly:AddKeybind({ Name="4x speed (hold)", Value=Enum.KeyCode.LeftAlt })
+end
+
+--[[
+--
+-- JAILBREAK
+--
+--]]
+
+do
+    local jb = pepsi:CreateTab({ Name="ESP" })
+    local g = jb:CreateSection({ Name="Visuals" })
+    
+    function SetGCProperties (prop, value)
+        for _,v in pairs(getgc(true)) do
+            if type(v) == 'table' then
+                SetProperty(v, prop, value)
+            end
+        end
+    end
+    
+    function RestoreGCProperties (prop)
+        for _,v in pairs(getgc(true)) do
+            if type(v) == 'table' then
+                RestoreProperty(v, prop)
+            end
+        end
+    end
+    
+    g:AddToggle({ Name="X toggle ESP", Key=true, Callback=function(yes)
+        if yes then
+            SetGCProperties("BulletSpread", 0)
+        else
+            RestoreGCProperties("BulletSpread")
+        end
+    end})
+end
