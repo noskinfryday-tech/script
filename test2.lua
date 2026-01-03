@@ -289,22 +289,6 @@ do
         end
     end
     
-    g:AddToggle({ Name="None", Key=true,  Callback=function(yes)
-        if yes then
-            SetGCProperties("hasKey", function() return true end) 
-        else
-            RestoreGCProperties("hasKey") 
-        end
-    end})
-
-    g:AddToggle({ Name="None", Key=true, Callback=function(yes)
-        if yes then
-            SetGCProperties("CamShakeMagnitude", 0)
-        else
-            RestoreGCProperties("CamShakeMagnitude")
-        end
-    end})
-    
     g:AddToggle({ Name="None", Key=true, Callback=function(yes)
         if yes then
             SetGCProperties("BulletSpread", 0)
