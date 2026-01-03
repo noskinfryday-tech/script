@@ -461,8 +461,8 @@ UserInputService.InputBegan:Connect(function(Input)
         
         if _G.SendNotifications == true then
             game:GetService("StarterGui"):SetCore("SendNotification",{
-                Title = "Tweeks Developer";
-                Text = "The ESP's visibility is now set to "..tostring(_G.ESPVisible)..".";
+                Title = "Tweeks Arsenal Private";
+                Text = "The ESP is now Toggled to "..tostring(_G.ESPVisible)..".";
                 Duration = 3;
             })
         end
@@ -476,15 +476,15 @@ end)
 if Success and not Errored then
     if _G.SendNotifications == true then
         game:GetService("StarterGui"):SetCore("SendNotification",{
-            Title = "Tweeks Esp";
-            Text = "ESP is now Activated.";
+            Title = "Tweeks Arsenal Private";
+            Text = "ESP is now Toggled On.,";
             Duration = 3;
         })
     end
 elseif Errored and not Success then
     if _G.SendNotifications == true then
         game:GetService("StarterGui"):SetCore("SendNotification",{
-            Title = "Tweeks Esp";
+            Title = "Tweeks Arsenal Private";
             Text = "ESP script has errored while loading, please check the developer console! (F9)";
             Duration = 3;
         })
