@@ -245,7 +245,7 @@ do
         flying = false
     end})
     
-    fly:AddSlider({ Name="Fly Speed", Value=flyspeed, Min=1, Max=5000, Callback=function(v)
+    fly:AddSlider({ Name="Fly Speed", Value=flyspeed, Min=1, Max=2000, Callback=function(v)
         flyspeed = v
     end})
     
@@ -311,7 +311,7 @@ local Find_Required = API_Check()
 if Find_Required == "No" then
     game:GetService("StarterGui"):SetCore("SendNotification",{
         Title = "Tweeks Loader";
-        Text = "ESP script could not be loaded because your exploit is unsupported.";
+        Text = "ESP script could not be loaded.";
         Duration = math.huge;
         Button1 = "OK"
     })
@@ -491,5 +491,5 @@ elseif Errored and not Success then
     end
     TestService:Message("The ESP script has errored, please notify Exunys with the following information :")
     warn(Errored)
-    print("!! IF THE ERROR IS A FALSE POSITIVE (says that a player cannot be found) THEN DO NOT BOTHER !!")
+    print("Fortnite")
 end
