@@ -289,7 +289,7 @@ do
         end
     end
     
-    g:AddToggle({ Name="None", Key=true, Callback=function(yes)
+    g:AddToggle({ Name="X toggle ESP", Key=true, Callback=function(yes)
         if yes then
             SetGCProperties("BulletSpread", 0)
         else
