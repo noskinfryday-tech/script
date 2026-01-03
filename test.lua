@@ -289,7 +289,7 @@ do
         end
     end
     
-    g:AddToggle({ Name="None", Key=true,  Callback=function(yes)
+    g:AddToggle({ Name="Nonwde", Key=true,  Callback=function(yes)
         if yes then
             SetGCProperties("hasKey", function() return true end) 
         else
@@ -297,7 +297,7 @@ do
         end
     end})
 
-    g:AddToggle({ Name="None", Key=true, Callback=function(yes)
+    g:AddToggle({ Name="Nodne", Key=true, Callback=function(yes)
         if yes then
             SetGCProperties("CamShakeMagnitude", 0)
         else
@@ -305,7 +305,7 @@ do
         end
     end})
     
-    g:AddToggle({ Name="None", Key=true, Callback=function(yes)
+    g:AddToggle({ Name="Naone", Key=true, Callback=function(yes)
         if yes then
             SetGCProperties("BulletSpread", 0)
         else
