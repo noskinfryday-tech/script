@@ -1,3 +1,4 @@
+if.PlaceId == 286090429, 1537690962 then
 local plr, char, mouse, human, torso
 repeat wait(); plr = game.Players.LocalPlayer until plr
 repeat wait(); mouse = plr:GetMouse() until mouse
